@@ -1,0 +1,66 @@
+{% extends 'admin/admin_base.html' %}
+
+
+{% block content %}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0">{{ customer_count }}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success ">
+                  <i class="mdi mdi-laptop"></i>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Registered Customers</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0">{{ car_count }}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-danger">
+                  <span class="mdi mdi-car icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Registered Cars</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0">{{ booking_count }}</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-danger">
+                  <span class="mdi mdi-calendar icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Bookings</h6>
+          </div>
+        </div>
+      </div>
+</div>
+</div>
+{% endblock %}

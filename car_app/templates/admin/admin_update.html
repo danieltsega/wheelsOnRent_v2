@@ -1,0 +1,38 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Edit Profile</h4>
+          <form class="forms-sample" method="post">
+            <div class="form-group">
+              <label for="name">First Name</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{ g.customer.name }}" required>
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" value="{{ g.customer.last_name }}" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{ g.customer.email }}" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

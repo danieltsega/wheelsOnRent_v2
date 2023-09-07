@@ -1,0 +1,69 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+<div class="row">
+  <div class="col-lg-9 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Our Customers</h4>
+        </p>
+        <div class="mb-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search users...">
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Manage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in customers %}
+              <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.last_name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone_number }}</td>
+            <td><form action="{{ url_for('customer.delete', id=customer['id']) }}" method="post"><input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+              </form></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const table = document.querySelector('.table');
+  const rows = table.querySelectorAll('tbody tr');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    rows.forEach(row => {
+      const name = row.querySelector('td:first-child').textContent.toLowerCase();
+      const lastName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      const email = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+      const phone = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+      if (name.includes(searchTerm) || lastName.includes(searchTerm) || email.includes(searchTerm) || phone.includes(searchTerm)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Create Customer{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% if g.customer and g.customer['role'] == 1 %}
+    <form method="post">
+      <label for="name">Name</label>
+      <input name="name" id="#" required>
+      <label for="last_name">Last Name</label>
+      <input name="last_name" id="#" required>
+      <label for="phone_number">Phone Number</label>
+      <input name="phone_number" id="#" required>
+      <label for="email">Email</label>
+      <input name="email" id="#" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+      <input type="hidden" name="role" value="0">
+      <input type="submit" value="Create Customer">
+    </form>
+  {% else %}
+    <p>You are not authorized to create a customer.</p>
+  {% endif %}
+{% endblock %}

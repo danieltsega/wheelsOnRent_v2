@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ customer['name'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% if g.customer and g.customer['role'] == 1 %}
+    <form method="post">
+      <label for="name">Name</label>
+      <input name="name" id="name" value="{{ request.form['name'] or customer['name'] }}" required>
+      <label for="last_name">Last Name</label>
+      <input name="last_name" id="last_name" value="{{ request.form['last_name'] or customer['last_name'] }}" required>
+      <label for="phone_number">Phone Number</label>
+      <input name="phone_number" id="phone_number" value="{{ request.form['phone_number'] or customer['phone_number'] }}" required>
+      <label for="email">Email</label>
+      <input name="email" id="email" value="{{ request.form['email'] or customer['email'] }}" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" value="{{ request.form['password'] or customer['password'] }}" required>
+      <input type="hidden" name="role" value="0">
+      <input type="submit" value="Update">
+    </form>
+    <hr>
+    <form action="{{ url_for('customer.delete', id=customer['id']) }}" method="post">
+      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+  {% else %}
+    <p>You do not have permission to access this page.</p>
+  {% endif %}
+{% endblock %}

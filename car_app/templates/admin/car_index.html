@@ -1,0 +1,85 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Manage Cars</h4>
+          </p>
+          <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search cars...">
+          </div>
+          <div class="table-responsive">
+            <div style="display:flex; justify-content:end;">
+            <a class="btn btn-success" href="{{ url_for('car.create') }}">Add new Car</a>
+            </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Car Image</th>
+                <th>Car Name</th>
+                <th>Car Model</th>
+                <th>Number of Seats</th>
+                <th>Car Gear Type</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for car in cars %}
+              <td>
+                {% if car.image %}
+                  <img src="{{ url_for('uploaded_image', car_id=car.id) }}" alt="{{ car.name }} Image" width="200" height="150" >
+                {% else %}
+                  <p>No Image Available</p>
+                {% endif %}
+              </td>            
+                  <td>{{ car.name }}</td>
+                  <td>{{ car.model }}</td>
+                  <td>{{ car.seat }}</td>
+                  <td>{{ car.gearbox }}</td>
+                  <td><a class="btn btn-primary" href="{{ url_for('car.update', id=car['id']) }}">Edit</a></td>
+                  <td>
+                    <form action="{{ url_for('car.delete', id=car['id']) }}" method="post">
+                      <input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const table = document.querySelector('.table');
+  const rows = table.querySelectorAll('tbody tr');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    rows.forEach(row => {
+      const carName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      const carModel = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+      const carGearbox = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+      if (
+        carName.includes(searchTerm) ||
+        carModel.includes(searchTerm) ||
+        carGearbox.includes(searchTerm)
+      ) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+{% endblock %}
+

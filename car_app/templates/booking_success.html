@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Success!</h1>
+
+  <p>Dear customer['name'], you have successfully booked car['name'] from booking['pickup_time'] to booking['dropoff_time'].</p>
+
+  <p>Pickup Point: <b>{{ booking['current_location'] }}</b></p>
+  <p>Dropoff Point: <b>{{ booking['dest_location'] }}</b></p>
+  <p>Pickup Time: <b>{{ booking['pickup_time'] }}</b></p>
+  <p>Dropoff Time: <b>{{ booking['dropoff_time'] }}</b></p>
+
+  <p>Thank you for choosing our car rental service!</p>
+{% endblock %}

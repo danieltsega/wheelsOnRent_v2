@@ -1,0 +1,49 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Update Car</h4>
+          <p class="card-description"> Update the car Information </p>
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+            <label for="name">Car Name</label>
+            <input class="form-control" name="name" id="name" value="{{ request.form['name'] or car['name'] }}" required>
+              </div>
+            <div class="form-group">
+            <label for="model">Car Model</label>
+            <input class="form-control" name="model" id="model" value="{{ request.form['model'] or car['model'] }}" required>
+          </div>
+            <div class="form-group">
+            <label for="status">Car Status</label>
+            <input class="form-control" name="status" id="status" value="{{ request.form['status'] or car['status'] }}" required>
+          </div>
+            <div class="form-group">
+            <label for="seat">Number of Seats</label>
+            <input class="form-control" name="seat" id="seat" value="{{ request.form['seat'] or car['seat'] }}" required>
+          </div>
+            <div class="form-group">
+            <label for="door">Doors</label>
+            <input class="form-control" name="door" id="door" value="{{ request.form['door'] or car['door'] }}" required>
+          </div>
+            <div class="form-group">
+            <label for="gearbox">Gearbox Type</label>
+            <input class="form-control" name="gearbox" id="gearbox" value="{{ request.form['gearbox'] or car['gearbox'] }}" required>
+          </div>
+            <div class="form-group">
+            <label for="image">Car image</label> 
+            <input class="form-control" type="file" name="image" id="image" accept="image/*" required>
+          </div>
+            <div class="form-group">
+            <input class="btn btn-success" type="submit" value="Save">
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ booking['email'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% if g.customer and booking['customer_id'] == g.customer['id'] or g.admin %}
+    <form method="post">
+      <label for="pickup_time">Pickup Time</label>
+      <input name="pickup_time" id="#" value="{{ request.form['pickup_time'] }}">
+      <label for="dropoff_time">Dropoff Time</label>
+      <input name="dropoff_time" id="#" value="{{ request.form['dropoff_time'] }}">
+      <label for="email">Email</label>
+      <input name="email" id="email" value="{{ request.form['email'] }}" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" value="{{ request.form['password'] }}" required>
+      <input type="submit" value="Save">
+    </form>
+    <hr>
+    <form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post">
+      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+  {% else %}
+    <p>You are not authorized to edit this booking.</p>
+  {% endif %}
+{% endblock %}
+
