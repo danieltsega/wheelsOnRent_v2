@@ -22,6 +22,7 @@ def get_upload_path(filename):
 
 # Car list
 @bp.route('/')
+@login_required
 def index():
     db = get_db()
     cars = db.execute(

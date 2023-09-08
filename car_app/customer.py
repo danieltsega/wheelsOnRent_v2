@@ -72,7 +72,7 @@ def login():
             session['customer_id'] = customer['id']
             if customer['role'] == 1:
                 return redirect(url_for('customer.admin_dashboard'))
-            return redirect(url_for('car.guest_mode'))
+            return redirect(url_for('car.index'))
 
         flash(error)
 
@@ -95,7 +95,7 @@ def load_logged_in_customer():
 def logout():
     # Clear the user's session data
     session.pop('customer_id', None)
-    return redirect(url_for('car.index'))
+    return redirect(url_for('home'))
 
 # Use the after_request decorator to add a response header
 @bp.after_request
