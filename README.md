@@ -9,7 +9,7 @@ To get started with WheelsOnRent, follow these steps after cloning the repositor
 1. Change your current directory to the project folder:
 
    ```bash
-   cd wheelsOnRent_v1
+   cd wheelsOnRent_v2
    ```
 
 2. Initialize the database by running the following command:
