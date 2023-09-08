@@ -27,6 +27,7 @@ def index():
     cars = db.execute(
         'SELECT id, name, seat, gearbox, image, model, door'
         ' FROM car'
+        ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
     return render_template('index.html', cars=cars)
@@ -38,6 +39,7 @@ def guest_mode():
     cars = db.execute(
         'SELECT id, name, seat, gearbox, image, model, door'
         ' FROM car'
+        ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
     return render_template('index.html', cars=cars)
