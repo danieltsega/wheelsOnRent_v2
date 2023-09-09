@@ -290,9 +290,3 @@ def admin_dashboard():
                            car_count=car_count,
                            customer_count=customer_count,
                            booking_count=booking_count)
-
-
-
-
-
-
