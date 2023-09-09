@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from car_app.customer import login_required
 from car_app.db import get_db
+from car_app.car import get_car
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
@@ -27,6 +28,7 @@ def index():
 @bp.route('/create/<int:car_id>', methods=('GET', 'POST'))
 @login_required
 def create(car_id):
+    car = get_car(car_id)
     if request.method == 'POST':
         start_date = request.form['start_date']
         end_date = request.form['end_date']
@@ -40,7 +42,7 @@ def create(car_id):
         if error is not None:
             flash(error)
         else:
-            customer_id = session.get('customer_id')
+            customer_id = g.customer['id']
 
             db = get_db()
             db.execute(
@@ -49,15 +51,7 @@ def create(car_id):
                 (car_id, customer_id, start_date, end_date)
             )
             db.commit()
-            return redirect(url_for('customer.index'))
-
-
-    db = get_db()
-    car = db.execute(
-        'SELECT id, name, seat, gearbox, image, model'
-        ' FROM car WHERE id = ?',
-        (car_id,)
-    ).fetchone()
+            return redirect(url_for('booking.index'))
 
     return render_template('booking_create.html', car=car)
 
