@@ -7,28 +7,53 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from car_app.customer import login_required
 from car_app.db import get_db
 from car_app.car import get_car
+from datetime import datetime
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
-# Booking index page(The logged in user can see his reservation)
+
+# Admin can see all bookings
 @bp.route('/')
 @login_required
 def index():
     db = get_db()
-    boookings = db.execute(
-        'SELECT b.id, cu.name, cu.last_name, ca.name, start_date, end_date'
+    bookings = db.execute(
+        'SELECT b.id, ca.name, cu.name, cu.last_name, start_date, end_date'
         ' FROM booking b'
         ' JOIN customer cu ON b.customer_id = cu.id'
         ' JOIN car ca on b.car_id = ca.id'
         ' ORDER BY start_date ASC'
     ).fetchall()
-    return render_template('admin/booking_index.html', boookings=boookings)
+    return render_template('admin/booking_index.html', bookings=bookings)
+
+# Customer can see his own bookings
+@bp.route('/my_bookings')
+@login_required
+def my_bookings():
+    db = get_db()
+    # Get the customer_id of the logged-in user
+    customer_id = g.customer['id']
+
+    # Modify the SQL query to filter by customer_id
+    bookings = db.execute(
+        'SELECT b.id, ca.name, cu.name, cu.last_name, start_date, end_date'
+        ' FROM booking b'
+        ' JOIN customer cu ON b.customer_id = cu.id'
+        ' JOIN car ca ON b.car_id = ca.id'
+        ' WHERE b.customer_id = ?'
+        ' ORDER BY start_date ASC',
+        (customer_id,)
+    ).fetchall()
+
+    return render_template('admin/booking_index.html', bookings=bookings)
+
 
 
 @bp.route('/create/<int:car_id>', methods=('GET', 'POST'))
 @login_required
 def create(car_id):
     car = get_car(car_id)
+    current_date = datetime.now().date()
     if request.method == 'POST':
         start_date = request.form['start_date']
         end_date = request.form['end_date']
@@ -58,23 +83,21 @@ def create(car_id):
 # Getting booking with the same booking id
 def get_booking(id, check_author=True):
     booking = get_db().execute(
-        'SELECT b.id, cu.name, ca.name, start_date, end_date'
+        'SELECT b.id, cu.name, ca.name, start_date, end_date, b.customer_id'
         ' FROM booking b'
         ' JOIN customer cu ON b.customer_id = cu.id'
         ' JOIN car ca on b.car_id = ca.id'
-        ' WHERE booking.id = ?',
+        ' WHERE b.id = ?',
         (id,)
     ).fetchone()
-
     if booking is None:
         abort(404, f"Booking id {id} doesn't exist.")
 
-    if check_author and g.customer and booking['customer_id'] != g.customer['id']:
-        abort(403)
-    elif check_author and not g.customer and g.customer['role'] == 1:
-        abort(403)
-    elif not check_author or g.customer and g.customer['role'] == 1 or g.customer == booking['customer_id']:
+    # Check if the user is an admin (role == 1) or if the booking belongs to the user
+    if g.customer['role'] == 1 or (check_author and booking['customer_id'] == g.customer['id']):
         return booking
+    else:
+        abort(403)
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
