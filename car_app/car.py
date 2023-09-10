@@ -158,20 +158,24 @@ def update(id):
             flash(error)
         else:
             # Check if an image was uploaded
+            db = get_db()
             if image and allowed_file(image.filename):
                 image_data = image.read() 
 
-                db = get_db()
                 db.execute(
                     'UPDATE car SET name = ?, model = ?, status = ?, seat = ?, door = ?, gearbox = ?, image = ?, price = ?'
                     'WHERE id = ?',
                     (name, model, status, seat, door, gearbox, image_data, price, id)
                 )
-                db.commit()
-                return redirect(url_for('car.index'))
             else:
-                # Handle invalid or missing image
-                flash('Invalid or missing image.')
+                # Keep the previous image and update other car details
+                db.execute(
+                    'UPDATE car SET name = ?, model = ?, status = ?, seat = ?, door = ?, gearbox = ?, price = ?'
+                    'WHERE id = ?',
+                    (name, model, status, seat, door, gearbox, price, id)
+                )
+            db.commit()
+            return redirect(url_for('car.index'))
     return render_template('admin/car_update.html', car=car)
 
 # Deletes the car with a given id
