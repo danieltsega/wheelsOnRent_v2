@@ -7,7 +7,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from car_app.customer import login_required
 from car_app.db import get_db
 from car_app.car import get_car
-from datetime import datetime
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
@@ -53,7 +52,6 @@ def my_bookings():
 @login_required
 def create(car_id):
     car = get_car(car_id)
-    current_date = datetime.now().date()
     if request.method == 'POST':
         start_date = request.form['start_date']
         end_date = request.form['end_date']

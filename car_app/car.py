@@ -19,11 +19,22 @@ def allowed_file(filename):
 def get_upload_path(filename):
     return os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
 
-
-# Car list
-@bp.route('/list')
+# Admin mode page, Admin can see all cars(booked and avalable)
+@bp.route('/car/')
 @login_required
 def index():
+    db = get_db()
+    cars = db.execute(
+        'SELECT id, name, seat, gearbox, image, model'
+        ' FROM car'
+        ' ORDER BY name ASC'
+    ).fetchall()
+    return render_template('admin/car_index.html', cars=cars)
+
+# Car list
+@bp.route('/available')
+@login_required
+def available():
     db = get_db()
     cars = db.execute(
         'SELECT id, name, seat, gearbox, image, model, door'
@@ -44,19 +55,6 @@ def guest_mode():
         ' ORDER BY name ASC'
     ).fetchall()
     return render_template('index.html', cars=cars)
-
-# Admin mode page, Admin can see all cars(booked and avalable)
-@bp.route('/admin_mode')
-@login_required
-def admin_mode():
-    db = get_db()
-    cars = db.execute(
-        'SELECT id, name, seat, gearbox, image, model'
-        ' FROM car'
-        ' ORDER BY name ASC'
-    ).fetchall()
-    return render_template('admin/car_index.html', cars=cars)
-
 
 ## Admin can create new car entry ##
 @bp.route('/create', methods=('GET', 'POST'))
@@ -178,4 +176,4 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM car WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('car.admin_mode'))
+    return redirect(url_for('car.index'))

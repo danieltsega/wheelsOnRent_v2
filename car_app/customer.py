@@ -72,7 +72,7 @@ def login():
             session['customer_id'] = customer['id']
             if customer['role'] == 1:
                 return redirect(url_for('customer.admin_dashboard'))
-            return redirect(url_for('car.index'))
+            return redirect(url_for('car.available'))
 
         flash(error)
 

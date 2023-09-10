@@ -16,9 +16,8 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>Car Model</th>
-                  <th>Customer First Name</th>
-                  <th>Customer Last Name</th>
+                  <th>Car Name</th>
+                  <th>Customer Name</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Manage</th>
@@ -29,7 +28,6 @@
                   <tr>
                     <td>{{ booking[1] }}</td>
                     <td>{{ booking[2] }}</td>
-                    <td>{{ booking[3] }}</td>
                     <td>{{ booking[4] }}</td>
                     <td>{{ booking[5] }}</td>
               <td><form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post"><input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
