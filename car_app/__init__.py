@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, send_from_directory,url_for,send_file,Response,render_template
+from flask import Flask, send_from_directory,url_for,send_file,Response,render_template,redirect
 from car_app.db import get_db
 
 def create_app(test_config=None):
@@ -41,7 +41,8 @@ def create_app(test_config=None):
     # a simple page that says hello
     @app.route('/')
     def home():
-        return render_template('home.html')
+        #return render_template('home.html')
+        return redirect(url_for('car.available'))
     
     from . import db
     db.init_app(app)

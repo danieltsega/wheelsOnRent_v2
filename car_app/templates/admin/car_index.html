@@ -23,6 +23,7 @@
                 <th>Car Model</th>
                 <th>Number of Seats</th>
                 <th>Car Gear Type</th>
+		<th>Price Per a Day</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -40,6 +41,7 @@
                   <td>{{ car.model }}</td>
                   <td>{{ car.seat }}</td>
                   <td>{{ car.gearbox }}</td>
+		  <td>{{ car.price }}</td>
                   <td><a class="btn btn-primary" href="{{ url_for('car.update', id=car['id']) }}">Edit</a></td>
                   <td>
                     <form action="{{ url_for('car.delete', id=car['id']) }}" method="post">

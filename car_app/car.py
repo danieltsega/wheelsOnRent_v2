@@ -25,7 +25,7 @@ def get_upload_path(filename):
 def index():
     db = get_db()
     cars = db.execute(
-        'SELECT id, name, seat, gearbox, image, model'
+        'SELECT id, name, model, seat, door, gearbox, image, price'
         ' FROM car'
         ' ORDER BY name ASC'
     ).fetchall()
@@ -33,11 +33,11 @@ def index():
 
 # Car list
 @bp.route('/available')
-@login_required
+#@login_required
 def available():
     db = get_db()
     cars = db.execute(
-        'SELECT id, name, seat, gearbox, image, model, door'
+        'SELECT id, name, model, seat, door, gearbox,  image, price'
         ' FROM car'
         ' WHERE status = 1'
         ' ORDER BY name ASC'
@@ -49,7 +49,7 @@ def available():
 def guest_mode():
     db = get_db()
     cars = db.execute(
-        'SELECT id, name, seat, gearbox, image, model, door'
+        'SELECT id, name, model, seat, door, gearbox, image, price'
         ' FROM car'
         ' WHERE status = 1'
         ' ORDER BY name ASC'
@@ -68,6 +68,7 @@ def create():
         door = request.form['door']
         gearbox = request.form['gearbox']
         image = request.files['image']
+        price = request.form['price']
         error = None
 
         if not name:
@@ -82,6 +83,8 @@ def create():
             error = 'Door is required.'
         if not gearbox:
             error = 'Gearbox is required.'
+        if not price:
+            error = 'Price is required.'
 
         if error is not None:
             flash(error)
@@ -92,12 +95,12 @@ def create():
 
                 db = get_db()
                 db.execute(
-                    'INSERT INTO car (name, model, status, seat, door, gearbox, image)'
-                    ' VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    (name, model, status, seat, door, gearbox, image_data)
+                    'INSERT INTO car (name, model, status, seat, door, gearbox, image, price)'
+                    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                    (name, model, status, seat, door, gearbox, image_data, price)
                 )
                 db.commit()
-                return redirect(url_for('car.admin_mode'))
+                return redirect(url_for('car.index'))
             else:
                 # Handle invalid or missing image
                 flash('Invalid or missing image.')
@@ -108,7 +111,7 @@ def create():
 # Getting a car associated with a given id to update it
 def get_car(id, check_author=True):
     car = get_db().execute(
-        'SELECT id, name, model, status, seat, door, gearbox, image'
+        'SELECT id, name, model, status, seat, door, gearbox, image, price'
         ' FROM car'
         ' WHERE car.id = ?',
         (id,)
@@ -133,6 +136,7 @@ def update(id):
         door = request.form['door']
         gearbox = request.form['gearbox']
         image = request.files['image']
+        price = request.form['price']
         error = None
 
         if not name:
@@ -147,6 +151,8 @@ def update(id):
             error = 'Door is required.'
         if not gearbox:
             error = 'Gearbox is required.'
+        if not price:
+            error = 'Price is required.'
 
         if error is not None:
             flash(error)
@@ -157,12 +163,12 @@ def update(id):
 
                 db = get_db()
                 db.execute(
-                    'UPDATE car SET name = ?, model = ?, status = ?, seat = ?, door = ?, gearbox = ?, image = ?'
+                    'UPDATE car SET name = ?, model = ?, status = ?, seat = ?, door = ?, gearbox = ?, image = ?, price = ?'
                     'WHERE id = ?',
-                    (name, model, status, seat, door, gearbox, image_data, id)
+                    (name, model, status, seat, door, gearbox, image_data, price, id)
                 )
                 db.commit()
-                return redirect(url_for('car.admin_mode'))
+                return redirect(url_for('car.index'))
             else:
                 # Handle invalid or missing image
                 flash('Invalid or missing image.')
