@@ -15,6 +15,7 @@
         <a class="navbar-brand text-xl font-bold">WheelsOnRent</a>
         {% if g.customer %}
         <form class="form-inline">
+	    <a  class="btn btn-primary my-2 my-sm-0" href="{{ url_for('booking.my_bookings') }}">Manage Your Bookings</a>
             <a  class="btn btn-danger my-2 my-sm-0" href="{{ url_for('customer.logout') }}">Log Out</a>
           {% else %}
           <a style="font-weight:700;" class="btn btn-outline-success my-2 my-sm-0" href="{{url_for('customer.login')}}" class="nav_link">Sign In</a>

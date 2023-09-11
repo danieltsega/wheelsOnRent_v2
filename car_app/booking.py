@@ -76,7 +76,7 @@ def create(car_id):
             db.commit()
             return redirect(url_for('booking.my_bookings'))
 
-    return render_template('booking_create.html', car=car)
+    return render_template('booking/create.html', car=car)
 
 # Getting booking with the same booking id
 def get_booking(id, check_author=True):
@@ -121,9 +121,9 @@ def update(id):
                 (car_id, start_date, end_date, g.customer['id'], id)
             )
             db.commit()
-            return redirect(url_for('booking.index'))
+            return redirect(url_for('booking.my_bookings'))
 
-    return render_template('booking_update.html', booking=booking)
+    return render_template('booking/update.html', booking=booking)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
@@ -132,4 +132,4 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM booking WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('booking.index'))
+    return redirect(url_for('booking.my_bookings'))

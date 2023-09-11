@@ -7,7 +7,7 @@
     <div class="col-lg-9 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Manage Customers Bookings</h4>
+          <h4 class="card-title">Update or Delete Your Bookings</h4>
           </p>
           <div class="mb-3">
             <input type="text" id="searchInput" class="form-control" placeholder="Search bookings...">
@@ -20,10 +20,8 @@
                   <th>Customer Name</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-		  {% if g.customer['role'] == 0 %}
 		  <th>Update</th>
-		  {% endif %}
-                  <th>Manage</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -33,16 +31,15 @@
                     <td>{{ booking[2] }}</td>
                     <td>{{ booking[4] }}</td>
                     <td>{{ booking[5] }}</td>
-		    {% if g.customer['role'] == 0 %}
                     <td>
                       <form action="{{ url_for('booking.update', id=booking['id']) }}" method="post">
                         <!-- Add your update button/link here -->
                         <input type="submit" value="Update">
                       </form>
                     </td>
-                    {% endif %}
-              <td><form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post"><input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
-                </form></td>
+              	    <td>
+		      <form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post"><input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+		      </form></td>
                   </tr>
                 {% endfor %}
               </tbody>

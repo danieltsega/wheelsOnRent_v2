@@ -54,7 +54,7 @@ def guest_mode():
         ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
-    return render_template('index.html', cars=cars)
+    return render_template('car/index.html', cars=cars)
 
 ## Admin can create new car entry ##
 @bp.route('/create', methods=('GET', 'POST'))
