@@ -42,7 +42,7 @@ def available():
         ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
-    return render_template('index.html', cars=cars)
+    return render_template('car/index.html', cars=cars)
 
 # Guest mode page, Customer can see without logging in if he wish
 @bp.route('/guest_mode')

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-9 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Manage Customers Bookings</h4>
+          </p>
+          <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search bookings...">
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Car Name</th>
+                  <th>Customer Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+		  {% if g.customer['role'] == 0 %}
+		  <th>Update</th>
+		  {% endif %}
+                  <th>Manage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for booking in bookings %}
+                  <tr>
+                    <td>{{ booking[1] }}</td>
+                    <td>{{ booking[2] }}</td>
+                    <td>{{ booking[4] }}</td>
+                    <td>{{ booking[5] }}</td>
+		    {% if g.customer['role'] == 0 %}
+                    <td>
+                      <form action="{{ url_for('booking.update', id=booking['id']) }}" method="post">
+                        <!-- Add your update button/link here -->
+                        <input type="submit" value="Update">
+                      </form>
+                    </td>
+                    {% endif %}
+              <td><form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post"><input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+                </form></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const table = document.querySelector('.table');
+  const rows = table.querySelectorAll('tbody tr');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+    rows.forEach(row => {
+      const carModel = row.querySelector('td:first-child').textContent.toLowerCase();
+      const customerFirstName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      const customerLastName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+      const startDate = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+      const endDate = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
+      if (
+        carModel.includes(searchTerm) ||
+        customerFirstName.includes(searchTerm) ||
+        customerLastName.includes(searchTerm) ||
+        startDate.includes(searchTerm) ||
+        endDate.includes(searchTerm)
+      ) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}
+
