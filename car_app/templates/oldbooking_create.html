@@ -5,16 +5,12 @@
 {% endblock %}
 
 {% block content %}
-   {% if g.customer or g.admin %}
+   {% if g.customer or g.customer['role'] == 1 %}
   <form method="post">
-    <label for="pickup_time">Pickup Time</label>
-    <input name="pickup_time" id="#" value="{{ request.form['pickup_time'] }}">
-    <label for="dropoff_time">Dropoff Time</label>
-    <input name="dropoff_time" id="#" value="{{ request.form['dropoff_time'] }}">
-    <label for="email">Email</label>
-    <input name="email" id="email" value="{{ request.form['email'] }}" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" value="{{ request.form['password'] }}" required>
+    <label for="start_date">Start Date</label>
+    <input name="start_date" id="start_date" value="{{ request.form['end_date'] }}">
+    <label for="end_date">End Date</label>
+    <input name="end_date" id="#" value="{{ request.form['end_date'] }}">
     <input type="submit" value="Save"><a class="action" href="{{ url_for('car.index') }}">Cancel</a>
   </form>
   {% else %}

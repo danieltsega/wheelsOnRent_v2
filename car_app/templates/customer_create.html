@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  {% if g.customer and g.customer['role'] == 1 %}
+  {% if g.customer['role'] == 1 %}
     <form method="post">
       <label for="name">Name</label>
       <input name="name" id="#" required>
