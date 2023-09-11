@@ -44,7 +44,7 @@ def my_bookings():
         (customer_id,)
     ).fetchall()
 
-    return render_template('admin/booking_index.html', bookings=bookings)
+    return render_template('booking/index.html', bookings=bookings)
 
 
 
@@ -74,7 +74,7 @@ def create(car_id):
                 (car_id, customer_id, start_date, end_date)
             )
             db.commit()
-            return redirect(url_for('booking.index'))
+            return redirect(url_for('booking.my_bookings'))
 
     return render_template('booking_create.html', car=car)
 
