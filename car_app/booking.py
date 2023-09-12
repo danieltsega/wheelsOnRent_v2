@@ -112,9 +112,12 @@ def update(id):
         #car = item
 
     if request.method == 'POST':
-        car_id = request.form['car_id']
-        start_date = request.form['start_date']
-        end_date = request.form['end_date']
+        if 'update' in request.form:
+            car_id = request.form['car_id']
+            start_date = request.form['start_date']
+            end_date = request.form['end_date']
+        elif 'cancel' in request.form:
+            return redirect(url_for('booking.my_bookings'))
         error = None
 
         if not start_date:

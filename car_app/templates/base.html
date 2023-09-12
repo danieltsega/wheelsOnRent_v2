@@ -12,7 +12,7 @@
     </head>
 <body>
     <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
-        <a class="navbar-brand text-xl font-bold">WheelsOnRent</a>
+	    <a class="navbar-brand text-xl font-bold" href="{{ url_for('car.available') }}">WheelsOnRent</a>
         {% if g.customer %}
         <form class="form-inline">
 	    <a  class="btn btn-primary my-2 my-sm-0" href="{{ url_for('booking.my_bookings') }}">Manage Your Bookings</a>
