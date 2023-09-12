@@ -9,31 +9,36 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="form-title">Booking</h1>
-      <form action="{{ url_for('booking.create', car_id=car.id) }}" method="post">
+      <h1 class="form-title">Update Booking</h1>
+      <form action="{{ url_for('booking.update', id=booking.id) }}" method="post">
         <div class="main-user-info">
           <div class="user-input-box">
-            <label for="vehicle_type">Selected Car</label>
-            <select id="vehicle_type" name="car_id">
-		    <option value={{car.id}},{{car.name}},{{car.model}},{{car.status}},{{car.seat}},{{car.door}},{{car.gearbox}} >{{car.name}} | {{car.seat}} Seats | {{car.door}} Doors | {{car.gearbox}} Transmission</option>
-
+            <label for="vehicle_type">Change Car</label>
+	    <select id="vehicle_type" name="car_id">
+		{% for car in cars %}
+		  <option value="{{ car.id }}"
+		  {% if car.id == booking.car_id %}
+		  selected
+		  {% endif %}>
+		  {{car.name}} | {{car.seat}} Seats | {{car.door}} Doors | {{car.gearbox}} Transmission</option>
+		{% endfor %}
               <!-- Add more options as needed -->
           </select>
           </div>
 
           <div class="user-input-box">
-            <label for="start_date">Start Date</label>
-            <input type="date" id="start_date" name="start_date" placeholder="Enter Start Date"/>
+            <label for="start_date">Change Start Date</label>
+            <input type="date" id="start_date" name="start_date" placeholder="Enter Start Date" value="{{ booking.start_date }}"/>
           </div>
 
           <div class="user-input-box">
-            <label for="end_date">End Date</label>
-            <input type="date" id="end_date" name="end_date" placeholder="Enter End Date"/>
+            <label for="end_date">Change End Date</label>
+            <input type="date" id="end_date" name="end_date" placeholder="Enter End Date" value="{{ booking.end_date }}"/>
           </div>
         </div>
 
         <div class="form-submit-btn">
-          <input type="submit" value="Book Now">
+          <input type="submit" value="Update Booking">
         </div>
       </form>
     </div>

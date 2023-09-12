@@ -35,17 +35,16 @@ def my_bookings():
 
     # Modify the SQL query to filter by customer_id
     bookings = db.execute(
-        'SELECT b.id, ca.name, cu.name, cu.last_name, start_date, end_date'
+        'SELECT b.id, car_id, ca.id, ca.name, customer_id, cu.id, cu.name, cu.last_name, start_date, end_date'
         ' FROM booking b'
-        ' JOIN customer cu ON b.customer_id = cu.id'
-        ' JOIN car ca ON b.car_id = ca.id'
-        ' WHERE b.customer_id = ?'
+        ' JOIN customer cu ON customer_id = cu.id'
+        ' JOIN car ca ON car_id = ca.id'
+        ' WHERE customer_id = ?'
         ' ORDER BY start_date ASC',
         (customer_id,)
     ).fetchall()
 
     return render_template('booking/index.html', bookings=bookings)
-
 
 
 @bp.route('/create/<int:car_id>', methods=('GET', 'POST'))
@@ -81,10 +80,10 @@ def create(car_id):
 # Getting booking with the same booking id
 def get_booking(id, check_author=True):
     booking = get_db().execute(
-        'SELECT b.id, cu.name, ca.name, start_date, end_date, b.customer_id'
+        'SELECT b.id, cu.id, customer_id, cu.name, ca.id, car_id, ca.name, start_date, end_date'
         ' FROM booking b'
-        ' JOIN customer cu ON b.customer_id = cu.id'
-        ' JOIN car ca on b.car_id = ca.id'
+        ' JOIN customer cu ON customer_id = cu.id'
+        ' JOIN car ca ON car_id = ca.id'
         ' WHERE b.id = ?',
         (id,)
     ).fetchone()
@@ -101,6 +100,16 @@ def get_booking(id, check_author=True):
 @login_required
 def update(id):
     booking = get_booking(id)
+    #car = get_car(car_id)
+    db = get_db()
+    cars = db.execute(
+        'SELECT id, name, model, seat, door, gearbox, image, price'
+        ' FROM car'
+        ' ORDER BY name ASC'
+    ).fetchall()
+
+    #for item in cars:
+        #car = item
 
     if request.method == 'POST':
         car_id = request.form['car_id']
@@ -108,22 +117,23 @@ def update(id):
         end_date = request.form['end_date']
         error = None
 
-        if not car_id:
-            error = 'Select car.'
+        if not start_date:
+            error = 'Start date is required.'
+        if not end_date:
+            error = 'End date is required.'
 
         if error is not None:
             flash(error)
         else:
-            db = get_db()
             db.execute(
-                'UPDATE booking SET car_id = ?, start_date = ?, end_date = ?, customer_id'
+                'UPDATE booking SET car_id = ?, start_date = ?, end_date = ?, customer_id = ?'
                 ' WHERE id = ?',
                 (car_id, start_date, end_date, g.customer['id'], id)
             )
             db.commit()
             return redirect(url_for('booking.my_bookings'))
 
-    return render_template('booking/update.html', booking=booking)
+    return render_template('booking/update.html', booking=booking, cars=cars)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
