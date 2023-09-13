@@ -14,11 +14,9 @@
 <body>
   <!-- Navbar -->
 <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
-  <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-    </svg>
-    WheelsOnRent
+  <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+    <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
+    <span class="hidden md:inline">WheelsOnRent</span>
 </a>
   {% if g.customer %}
   <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-left">
