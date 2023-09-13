@@ -31,15 +31,12 @@
                     <td>{{ booking[6] }}</td>
                     <td>{{ booking[8] }}</td>
                     <td>{{ booking[9] }}</td>
-                    <td>
-                      <form action="{{ url_for('booking.update', id=booking[0]) }}" method="get">
-                        <!-- Add your update button/link here -->
-                        <input type="submit" value="Update">
-                      </form>
-                    </td>
+		    <td><a class="btn btn-primary" href="{{ url_for('booking.update', id=booking[0]) }}">Update</a></td>
               	    <td>
-		      <form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post"><input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')">
-		      </form></td>
+		      <form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post">
+			<input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')" style="background-color: red;">
+		      </form>
+		    </td>
                   </tr>
                 {% endfor %}
               </tbody>

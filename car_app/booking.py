@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from car_app.customer import login_required
 from car_app.db import get_db
 from car_app.car import get_car
+from car_app.shared_variables import get_greeting, get_today_date
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
@@ -29,6 +30,9 @@ def index():
 @bp.route('/my_bookings')
 @login_required
 def my_bookings():
+    # Say Good Morning/Good Afternoon your customer
+    greeting = get_greeting()
+
     db = get_db()
     # Get the customer_id of the logged-in user
     customer_id = g.customer['id']
@@ -44,12 +48,13 @@ def my_bookings():
         (customer_id,)
     ).fetchall()
 
-    return render_template('booking/index.html', bookings=bookings)
+    return render_template('booking/index.html', greeting=greeting, bookings=bookings)
 
 
 @bp.route('/create/<int:car_id>', methods=('GET', 'POST'))
 @login_required
 def create(car_id):
+    today_date = get_today_date()
     car = get_car(car_id)
     if request.method == 'POST':
         start_date = request.form['start_date']
@@ -72,10 +77,14 @@ def create(car_id):
                 ' VALUES (?, ?, ?, ?)',
                 (car_id, customer_id, start_date, end_date)
             )
+            db.execute(
+                'UPDATE car SET status = 0 WHERE id = ?',
+                (car_id,)
+            )
             db.commit()
             return redirect(url_for('booking.my_bookings'))
 
-    return render_template('booking/create.html', car=car)
+    return render_template('booking/create.html', today_date=today_date, car=car)
 
 # Getting booking with the same booking id
 def get_booking(id, check_author=True):
@@ -141,8 +150,48 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_booking(id)
+    booking = get_booking(id)
+    car_id = booking['car_id']  # Get the car_id associated with this booking
     db = get_db()
     db.execute('DELETE FROM booking WHERE id = ?', (id,))
+    db.execute('UPDATE car SET status = 1 WHERE id = ?', (car_id,))  # Update car status to 1 (available)
     db.commit()
+    if g.customer['role'] == 1:
+        return redirect(url_for('booking.index'))
     return redirect(url_for('booking.my_bookings'))
+
+
+# This is a function to run periodicaly to check expired bookings
+# To delete them
+# This should be run at least once per a day
+# This is an alternative automation if the customer or admin did not delete the expired booking
+@bp.route('/check_and_update_car_status')
+def check_and_update_car_status():
+    # This route checks for cars with end dates that have passed
+    # and updates their status to 1 (available for rent)
+
+    today_date = get_today_date()
+
+    db = get_db()
+
+    # Step 1: Update car status
+    expired_cars = db.execute(
+        'SELECT id FROM booking WHERE end_date < ?',
+        (today_date,)
+    ).fetchall()
+
+    for car_id in expired_cars:
+        db.execute(
+            'UPDATE car SET status = 1 WHERE id = ?',
+            (car_id,)
+        )
+
+    # Step 2: Delete expired bookings
+    db.execute(
+        'DELETE FROM booking WHERE end_date < ?',
+        (today_date,)
+    )
+
+    db.commit()
+
+    return 'Car statuses updated and expired bookings deleted.'

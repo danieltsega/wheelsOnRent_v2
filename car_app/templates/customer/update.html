@@ -1,30 +1,42 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Edit "{{ customer['name'] }}"{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
-  {% if g.customer and g.customer['role'] == 1 %}
-    <form method="post">
-      <label for="name">Name</label>
-      <input name="name" id="name" value="{{ request.form['name'] or customer['name'] }}" required>
-      <label for="last_name">Last Name</label>
-      <input name="last_name" id="last_name" value="{{ request.form['last_name'] or customer['last_name'] }}" required>
-      <label for="phone_number">Phone Number</label>
-      <input name="phone_number" id="phone_number" value="{{ request.form['phone_number'] or customer['phone_number'] }}" required>
-      <label for="email">Email</label>
-      <input name="email" id="email" value="{{ request.form['email'] or customer['email'] }}" required>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" value="{{ request.form['password'] or customer['password'] }}" required>
-      <input type="hidden" name="role" value="0">
-      <input type="submit" value="Update">
-    </form>
-    <hr>
-    <form action="{{ url_for('customer.delete', id=customer['id']) }}" method="post">
-      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-    </form>
-  {% else %}
-    <p>You do not have permission to access this page.</p>
-  {% endif %}
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Edit Profile</h4>
+          <form class="forms-sample" method="post">
+            <div class="form-group">
+              <label for="name">First Name</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{ g.customer.name }}" required>
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" value="{{ g.customer.last_name }}" required>
+            </div>
+	    <div class="form-group">
+              <label for="phone_number">Phone Number</label>
+              <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ g.customer.phone_number }}" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{ g.customer.email }}" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="background-color: #007ACC; border-color: #007ACC;">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

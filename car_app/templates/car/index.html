@@ -6,11 +6,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {% for car in cars %}
       <div class="col-md-24 mb-4 pt-2" style="width: 100%;">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="bg-black shadow-lg rounded-lg overflow-hidden">
           <img src="{{ url_for('uploaded_image', car_id=car.id) }}" class="w-auto h-46" alt="{{ car.name }} Image">
           <div class="p-4">
             <h5 class="text-xl font-semibold">{{ car.name }}</h5>
-            <p class="text-gray-600">
+            <p class="text-yellow-600">
               <strong>Model:</strong> {{ car.model }}<br>
               <strong>Seats:</strong> {{ car.seat }}<br>
               <strong>Doors:</strong> {{ car.door }}<br>

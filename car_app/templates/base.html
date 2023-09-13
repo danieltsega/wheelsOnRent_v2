@@ -1,30 +1,157 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        <script src="https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <title>WheelsOnRent</title>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-<body>
-    <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
-	    <a class="navbar-brand text-xl font-bold" href="{{ url_for('car.available') }}">WheelsOnRent</a>
-        {% if g.customer %}
-        <form class="form-inline">
-	    <a  class="btn btn-primary my-2 my-sm-0" href="{{ url_for('booking.my_bookings') }}">Manage Your Bookings</a>
-            <a  class="btn btn-danger my-2 my-sm-0" href="{{ url_for('customer.logout') }}">Log Out</a>
-          {% else %}
-          <a style="font-weight:700;" class="btn btn-outline-success my-2 my-sm-0" href="{{url_for('customer.login')}}" class="nav_link">Sign In</a>
-        </form>
+<html lang="en">
 
-        {% endif %}
-      </nav>
-      <div class="container-fluid mt-5">
-      {% block content %}{% endblock %}
-      </div>
-    </body>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>WheelsOnRent | Customer </title>
+
+       <!--Custom-->
+       <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <script src="https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/css/vendor.bundle.base.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/css/style.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+    
+</head>
+
+<body>
+    {% if g.customer or guest == 1 %}
+    <div class="container-scroller">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                <a class="sidebar-brand brand-logo" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">WheelsOnRent</a>
+		<a class="sidebar-brand brand-logo-mini" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">W</a>
+            </div>
+            <ul class="nav">
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="{{ url_for('car.available') }}">
+                        <span class="menu-icon">
+                <i class="mdi mdi-car"></i>
+              </span>
+                        <span class="menu-title">Available Cars</span>
+                    </a>
+                </li>
+                <br>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="{{ url_for('booking.my_bookings') }}">
+                        <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+                        <span class="menu-title">Manage Your Bookings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+			<a class="navbar-brand brand-logo-mini" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">W</a>
+                </div>
+                <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <span class="mdi mdi-menu"></span>
+            </button>
+                    <ul class="navbar-nav navbar-nav-right">
+                        <li class="nav-item nav-settings d-none d-lg-block">
+                            <a class="nav-link" href="#">
+                                <i class="mdi mdi-view-grid"></i>
+                            </a>
+                        </li>
+			
+			{% if g.customer['role'] == 0 %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                                <div class="navbar-profile">
+					<p>{{ greeting }}</p>
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ g.customer['name'] }}</p>
+                                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                                <h6 class="p-3 mb-0">Profile</h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item" href="{{ url_for('customer.update', id=g.customer['id']) }}">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-settings text-success"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Account Settings</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item" href="{{ url_for('customer.logout') }}">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-logout text-danger"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Log out</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+			{% else %}
+			<a style="font-weight: 700;" class="btn btn-outline-success my-2 my-sm-0" href="{{url_for('customer.login')}}" class="nav_link">Sign In</a>
+			{% endif %}
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+                </div>
+            </nav>
+	     <div class="container-fluid mt-5 main-panel">
+		   {% block content %}{% endblock %}
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © WheelsOnRent 2023</span>
+                    </div>
+                </footer>
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="alert alert-danger">
+            <p>You do not have permission to view this page.</p>
+        </div>
+    </div>
+    {% endif %}
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.carousel.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/off-canvas.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/hoverable-collapse.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/misc.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/settings.js')}}"></script>
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/todolist.js')}}"></script>
+
+    <script src="{{ url_for('static', filename='assets/admin/assets/js/dashboard.js')}}"></script>
+</body>
+
 </html>
