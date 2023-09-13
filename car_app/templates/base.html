@@ -22,7 +22,6 @@
   <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-left">
       <div>
           <button @click="open = !open" type="button" class="rounded-full h-10 w-10 flex items-center justify-center bg-primary text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary" id="dropdown-menu" aria-haspopup="true" aria-expanded="true">
-              <!-- Avatar Icon (You can replace this with your avatar image) -->
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
               </svg>
@@ -32,26 +31,18 @@
       <!-- Dropdown Menu -->
       <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-menu" id="dropdown-menu">
           <div class="py-1" role="none">
-              <a href="{{ url_for('booking.my_bookings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 inline" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm12 8a2 2 0 01-2 2H4a2 2 0 01-2-2v-4a2 2 0 012-2h8a2 2 0 012 2v4zm3-11a1 1 0 011 1v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1h3a1 1 0 110 2H4v10h12V4h-1a1 1 0 01-1-1zm-9 3a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                  </svg>
-                  Manage Bookings
-              </a>
-              <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 inline" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                      <path fill-rule="evenodd" d="M4 4a1 1 0 100-2 1 1 0 000 2zM14 1a1 1 0 11-2 0 1 1 0 012 0zM16 6a1 1 0 11-2 0 1 1 0 012 0zM14 11a1 1 0 100-2 1 1 0 000 2zm-7 6a1 1 0 100-2 1 1 0 000 2zm-4-5a1 1 0 112 0 1 1 0 01-2 0zM2 9a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" />
-                  </svg>
-                  Profile Settings
-              </a>
-              <a href="{{ url_for('customer.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 inline" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
-                      <path fill-rule="evenodd" d="M4 4a1 1 0 100-2 1 1 0 000 2zM14 1a1 1 0 11-2 0 1 1 0 012 0zM16 6a1 1 0 11-2 0 1 1 0 012 0zM14 11a1 1 0 100-2 1 1 0 000 2zm-7 6a1 1 0 100-2 1 1 0 000 2zm-4-5a1 1 0 112 0 1 1 0 01-2 0zM2 9a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" />
-                  </svg>
-                  Log Out
-              </a>
+            <a href="{{ url_for('booking.my_bookings') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/manage.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Manage Bookings</span>
+            </a>
+            <a href="" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/account.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Profile Settings</span>
+            </a>
+            <a href="{{ url_for('customer.logout') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/logout.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Log Out</span>
+            </a>
           </div>
       </div>
   </div>
