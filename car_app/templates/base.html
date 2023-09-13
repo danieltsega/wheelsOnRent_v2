@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <title>WheelsOnRent</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
     </head>
@@ -55,5 +56,44 @@
       <div class="container-fluid mt-5">
       {% block content %}{% endblock %}
       </div>
+      <footer class="bg-gray-900 text-white py-8 mt-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center">
+                <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+                    <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="Company Logo" class="h-10 w-10 mr-2">
+                    
+                </a>
+            </div>
+    
+            <p class="mt-4 text-center text-gray-300">Our mission is to provide the best car rental experience in the world.
+            </p>
+    
+            <div class="mt-8 flex flex-wrap justify-center">
+                <a href="{{ url_for('car.available') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">About Us</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Contact Us</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Our Services</a>
+            </div>
+    
+            <div class="mt-8 flex justify-center">
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-facebook-fill rounded-full bg-gray-700 p-2"></i>
+                </a>              
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-instagram-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-telegram-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-twitter-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+            </div>
+    
+            <div class="mt-8 text-center text-gray-500">
+                &copy; 2023 WheelsOnRent. All rights reserved.
+            </div>
+        </div>
+    </footer>    
     </body>
 </html>
