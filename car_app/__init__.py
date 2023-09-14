@@ -42,7 +42,7 @@ def create_app(test_config=None):
     @app.route('/')
     def home():
         #return render_template('home.html')
-        return redirect(url_for('car.available'))
+        return redirect(url_for('car.guest_mode'))
     
     from . import db
     db.init_app(app)

@@ -19,7 +19,13 @@
     <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
     <span class="hidden md:inline">WheelsOnRent</span>
 </a>
-  {% if g.customer %}
+  {% if g.customer['role'] == 0 %}
+  <div class="d-flex align-items-center">
+                    <!-- Apply dropdown menu styling to greeting and name -->
+                    <p class="origin-top-right absolute right-12  mt-2 w-auto flex items-center justify-center rounded-md shadow-lg bg-primary text-white ring-1 ring-black ring-opacity-5 mb-0 d-none d-sm-block navbar-profile-name">{{ greeting }} {{ g.customer['name'] }}</p>
+   </div>
+
+
   <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-left">
       <div>
           <button @click="open = !open" type="button" class="rounded-full h-10 w-10 flex items-center justify-center bg-primary text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary" id="dropdown-menu" aria-haspopup="true" aria-expanded="true">
@@ -36,7 +42,7 @@
               <img src="{{ url_for('static', filename='assets/icons/manage.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
               <span>Manage Bookings</span>
             </a>
-            <a href="" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+            <a href="{{ url_for('customer.update', id=g.customer['id']) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
               <img src="{{ url_for('static', filename='assets/icons/account.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
               <span>Profile Settings</span>
             </a>

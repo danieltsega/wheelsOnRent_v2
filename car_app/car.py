@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 
 from car_app.customer import login_required
 from car_app.db import get_db
+from car_app.shared_variables import get_greeting
 
 bp = Blueprint('car', __name__)
 
@@ -33,8 +34,12 @@ def index():
 
 # Car list
 @bp.route('/available')
-#@login_required
+@login_required
 def available():
+    # Say Good Morning/Good Afternoon your customer
+    greeting = get_greeting()
+
+    # connect to database
     db = get_db()
     cars = db.execute(
         'SELECT id, name, model, seat, door, gearbox,  image, price'
@@ -42,11 +47,12 @@ def available():
         ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
-    return render_template('car/index.html', cars=cars)
+    return render_template('car/index.html', greeting=greeting, cars=cars)
 
 # Guest mode page, Customer can see without logging in if he wish
 @bp.route('/guest_mode')
 def guest_mode():
+    guest = 1
     db = get_db()
     cars = db.execute(
         'SELECT id, name, model, seat, door, gearbox, image, price'
@@ -54,7 +60,7 @@ def guest_mode():
         ' WHERE status = 1'
         ' ORDER BY name ASC'
     ).fetchall()
-    return render_template('car/index.html', cars=cars)
+    return render_template('car/index.html', guest=guest, cars=cars)
 
 ## Admin can create new car entry ##
 @bp.route('/create', methods=('GET', 'POST'))

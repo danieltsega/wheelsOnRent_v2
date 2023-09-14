@@ -17,14 +17,14 @@
                     <strong>Model:</strong> {{ car.model }}<br>
                     <strong>Seats:</strong> {{ car.seat }}<br>
                     <strong>Gearbox:</strong> {{ car.gearbox }}<br>
-                    <strong>Price per Day:</strong> 256.86 Birr<br>
+		    <strong>Price per Day:</strong> {{ car.price }}<br>
                 </p>
                 <form class="mt-5" action="{{ url_for('booking.create', car_id=car.id) }}" method="POST">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="start_date">
                             Start Date
                         </label>
-                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_date" name="start_date" type="date" required>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_date" name="start_date" type="date" value="{{ today_date }}" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="end_date">

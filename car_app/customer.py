@@ -19,7 +19,7 @@ def register():
         phone_number = request.form['phone_number']
         email = request.form['email']
         password = request.form['password']
-        role = int(request.form['role'])
+        #role = int(request.form['role'])
         db = get_db()
         error = None
 
@@ -37,10 +37,11 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO customer (name, last_name, phone_number, email,  password, role) VALUES (?, ?, ?, ?, ?, ?)",
-                    (name, last_name, phone_number, email, generate_password_hash(password), role),
+                    "INSERT INTO customer (name, last_name, phone_number, email,  password) VALUES (?, ?, ?, ?, ?)",
+                    (name, last_name, phone_number, email, generate_password_hash(password)),
                 )
                 db.commit()
+                flash('You have registered successfully.')
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
@@ -142,7 +143,7 @@ def create():
         phone_number = request.form['phone_number']
         email = request.form['email']
         password = request.form['password']
-        role = int(request.form['role'])
+        #role = int(request.form['role'])
         db = get_db()
         error = None
 
@@ -160,10 +161,11 @@ def create():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO customer (name, last_name, phone_number, email,  password, role) VALUES (?, ?, ?, ?, ?, ?)",
-                    (name, last_name, phone_number, email, generate_password_hash(password), role),
+                    "INSERT INTO customer (name, last_name, phone_number, email,  password) VALUES (?, ?, ?, ?, ?)",
+                    (name, last_name, phone_number, email, generate_password_hash(password)),
                 )
                 db.commit()
+                flash('You have registered successfully.')
             except db.IntegrityError:
                 error = f"Email {email} is already registered."
             else:
@@ -189,17 +191,16 @@ def get_customer(id, check_author=True):
     return customer
 
 # Update the customer
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/update', methods=('GET', 'POST'))
 @login_required
-def update(id):
-    customer = get_customer(id)
+def update():
     if request.method == 'POST':
         name = request.form['name']
         last_name = request.form['last_name']
         phone_number = request.form['phone_number']
         email = request.form['email']
         password = request.form['password']
-        role = int(request.form['role'])
+        confirm_password = request.form['confirm_password']
         error = None
 
         if not name:
@@ -210,23 +211,23 @@ def update(id):
             error = 'Phone Number is required.'
         elif not email:
             error = 'Email is required.'
-        elif not password:
-            error = 'Password is required.'
-
+        elif password != confirm_password:
+            error = 'Passwords do not match.'
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE customer SET name = ?, last_name = ?, phone_number = ?, email = ?,  password = ?, role = ?'
+                'UPDATE customer SET name = ?, last_name = ?, phone_number = ?, email = ?,  password = ?'
                 ' WHERE id = ?',
-                (name, last_name, phone_number, email,  password, role, id)
+                (name, last_name, phone_number, email, generate_password_hash(password), g.customer['id'])
             )
             db.commit()
-            return redirect(url_for('customer.index'))
+            flash('Profile updated successfully.')
+            return redirect(url_for('car.available'))
 
-    return render_template('customer/update.html', customer=customer)
+    return render_template('customer/update.html')
 
 @bp.route('/edit_profile', methods=('GET', 'POST'))
 @login_required
