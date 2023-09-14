@@ -1,79 +1,41 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-<div class="content-wrapper">
-  <div class="row">
-    <div class="col-lg-9 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Update or Delete Your Bookings</h4>
-          </p>
-          <div class="mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search bookings...">
-          </div>
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Car Name</th>
-                  <th>Customer Name</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-		  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for booking in bookings %}
-                  <tr>
-                    <td>{{ booking[3] }}</td>
-                    <td>{{ booking[6] }}</td>
-                    <td>{{ booking[8] }}</td>
-                    <td>{{ booking[9] }}</td>
-		    <td><a class="btn btn-primary" href="{{ url_for('booking.update', id=booking[0]) }}">Update</a></td>
-              	    <td>
-		      <form action="{{ url_for('booking.delete', id=booking['id']) }}" method="post">
-			<input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')" style="background-color: red;">
-		      </form>
-		    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+<div class="container  mx-auto px-4 mt-10">
+    <h1 class="text-2xl font-semibold mb-3 text-center border-b pb-4 lg:text-left">Manage Your Booking</h1>
+
+    <!-- Booking Cards -->
+    {% if not bookings %}
+        <p class="text-center text-xl mt-4">You haven't booked a car yet.</p>
+    {% else %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {% for booking in bookings %}
+                <div class="bg-white rounded-lg overflow-hidden border border-gray-300">
+                    <!-- Image -->
+                    <div class="flex items-center justify-center p-4">
+                        <img src="{{ url_for('uploaded_image', car_id=booking.car_id) }}" class="w-32 h-auto object-cover" alt="{{ booking.car_name }} Image">
+                    </div>
+                    <!-- Properties -->
+                    <div class="p-4">
+                        <h2 class="text-xl font-semibold">{{ booking[3] }}</h2>
+                        <p class="text-gray-600">
+                            <strong>Customer:</strong> {{ booking[6] }}<br>
+                            <strong>Start Date:</strong> {{ booking[8] }}<br>
+                            <strong>End Date:</strong>{{ booking[9] }}<br>
+                        </p>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="p-4 flex justify-end">
+                        <form action="{{ url_for('booking.update', id=booking[0]) }}" method="get">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mr-3 rounded">Edit</button>
+                        </form>
+                        <form action="{{ url_for('booking.delete', id=booking.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this booking?')">
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-      </div>
-    </div>
-  </div>
+    {% endif %}
 </div>
-
-<script>
-  const searchInput = document.getElementById('searchInput');
-  const table = document.querySelector('.table');
-  const rows = table.querySelectorAll('tbody tr');
-
-  searchInput.addEventListener('input', function () {
-    const searchTerm = searchInput.value.toLowerCase();
-    rows.forEach(row => {
-      const carModel = row.querySelector('td:first-child').textContent.toLowerCase();
-      const customerFirstName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-      const customerLastName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-      const startDate = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
-      const endDate = row.querySelector('td:nth-child(5)').textContent.toLowerCase();
-      if (
-        carModel.includes(searchTerm) ||
-        customerFirstName.includes(searchTerm) ||
-        customerLastName.includes(searchTerm) ||
-        startDate.includes(searchTerm) ||
-        endDate.includes(searchTerm)
-      ) {
-        row.style.display = '';
-      } else {
-        row.style.display = 'none';
-      }
-    });
-  });
-</script>
 {% endblock %}
-

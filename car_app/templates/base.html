@@ -1,157 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <title>WheelsOnRent</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    </head>
+<body class="relative min-h-screen">
+  <!-- Navbar -->
+<nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
+  <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+    <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
+    <span class="hidden md:inline">WheelsOnRent</span>
+</a>
+  {% if g.customer['role'] == 0 %}
+  <div class="d-flex align-items-center">
+                    <!-- Apply dropdown menu styling to greeting and name -->
+                    <p class="origin-top-right absolute right-12  mt-2 w-auto flex items-center justify-center rounded-md shadow-lg bg-primary text-white ring-1 ring-black ring-opacity-5 mb-0 d-none d-sm-block navbar-profile-name">{{ greeting }} {{ g.customer['name'] }}</p>
+   </div>
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>WheelsOnRent | Customer </title>
 
-       <!--Custom-->
-       <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
-    <script src="https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+  <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-left">
+      <div>
+          <button @click="open = !open" type="button" class="rounded-full h-10 w-10 flex items-center justify-center bg-primary text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary" id="dropdown-menu" aria-haspopup="true" aria-expanded="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+              </svg>
+          </button>
+      </div>
+
+      <!-- Dropdown Menu -->
+      <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-menu" id="dropdown-menu">
+          <div class="py-1" role="none">
+            <a href="{{ url_for('booking.my_bookings') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/manage.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Manage Bookings</span>
+            </a>
+            <a href="{{ url_for('customer.update', id=g.customer['id']) }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/account.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Profile Settings</span>
+            </a>
+            <a href="{{ url_for('customer.logout') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem" style="text-decoration: none;">
+              <img src="{{ url_for('static', filename='assets/icons/logout.svg') }}" alt="My Icon" class="h-4 w-4 mr-2">
+              <span>Log Out</span>
+            </a>
+          </div>
+      </div>
+  </div>
+  {% else %}
+  <a style="font-weight: 700;" class="btn btn-outline-success my-2 my-sm-0" href="{{url_for('customer.login')}}" class="nav_link">Sign In</a>
+  {% endif %}
+</nav>
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/css/vendor.bundle.base.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/admin/assets/css/style.css')}}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+      <div class="container-fluid mt-5 pb-12" style="min-height: calc(100vh - 100px);">
+      {% block content %}{% endblock %}
+      </div>
+      <footer class="bg-gray-900 text-white py-8 absolute w-full">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center">
+                <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+                    <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="Company Logo" class="h-10 w-10 mr-2">
+                </a>
+            </div>
     
-</head>
-
-<body>
-    {% if g.customer or guest == 1 %}
-    <div class="container-scroller">
-        <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-                <a class="sidebar-brand brand-logo" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">WheelsOnRent</a>
-		<a class="sidebar-brand brand-logo-mini" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">W</a>
+            <p class="mt-4 text-center text-gray-300">Our mission is to provide the best car rental experience in the world.</p>
+    
+            <div class="mt-8 flex flex-wrap justify-center">
+                <a href="{{ url_for('car.available') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">About Us</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Contact Us</a>
+                <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Our Services</a>
             </div>
-            <ul class="nav">
-                <li class="nav-item menu-items">
-                    <a class="nav-link" href="{{ url_for('car.available') }}">
-                        <span class="menu-icon">
-                <i class="mdi mdi-car"></i>
-              </span>
-                        <span class="menu-title">Available Cars</span>
-                    </a>
-                </li>
-                <br>
-                <li class="nav-item menu-items">
-                    <a class="nav-link" href="{{ url_for('booking.my_bookings') }}">
-                        <span class="menu-icon">
-                <i class="mdi mdi-table-large"></i>
-              </span>
-                        <span class="menu-title">Manage Your Bookings</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_navbar.html -->
-            <nav class="navbar p-0 fixed-top d-flex flex-row">
-                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-			<a class="navbar-brand brand-logo-mini" href="{{ url_for('car.available') }}" style="text-decoration: none; color: white; font-size: 24px; font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif;">W</a>
-                </div>
-                <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-                    <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item nav-settings d-none d-lg-block">
-                            <a class="nav-link" href="#">
-                                <i class="mdi mdi-view-grid"></i>
-                            </a>
-                        </li>
-			
-			{% if g.customer['role'] == 0 %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
-                                <div class="navbar-profile">
-					<p>{{ greeting }}</p>
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ g.customer['name'] }}</p>
-                                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-                                <h6 class="p-3 mb-0">Profile</h6>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item" href="{{ url_for('customer.update', id=g.customer['id']) }}">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-settings text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Account Settings</p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item" href="{{ url_for('customer.logout') }}">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-logout text-danger"></i>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Log out</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-			{% else %}
-			<a style="font-weight: 700;" class="btn btn-outline-success my-2 my-sm-0" href="{{url_for('customer.login')}}" class="nav_link">Sign In</a>
-			{% endif %}
-                    </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-format-line-spacing"></span>
-            </button>
-                </div>
-            </nav>
-	     <div class="container-fluid mt-5 main-panel">
-		   {% block content %}{% endblock %}
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © WheelsOnRent 2023</span>
-                    </div>
-                </footer>
+    
+            <div class="mt-8 flex justify-center">
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-facebook-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-instagram-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-telegram-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-gray-200 mx-4">
+                    <i class="ri-twitter-fill rounded-full bg-gray-700 p-2"></i>
+                </a>
             </div>
-            <!-- main-panel ends -->
+    
+            <div class="mt-8 text-center text-gray-500">
+                &copy; 2023 WheelsOnRent. All rights reserved.
+            </div>
         </div>
-        <!-- page-body-wrapper ends -->
-    </div>
-    {% else %}
-    <div class="container">
-        <div class="alert alert-danger">
-            <p>You do not have permission to view this page.</p>
-        </div>
-    </div>
-    {% endif %}
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/chart.js/Chart.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/vendors/owl-carousel-2/owl.carousel.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/off-canvas.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/misc.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/settings.js')}}"></script>
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/todolist.js')}}"></script>
-
-    <script src="{{ url_for('static', filename='assets/admin/assets/js/dashboard.js')}}"></script>
-</body>
-
+    </footer>
+    </body>
 </html>

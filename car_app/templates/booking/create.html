@@ -1,41 +1,43 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>WheelsOnRent Booking Form</title>
-    <meta name="viewport" content="width=device-width,
-      initial-scale=1.0"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='assetsss/style.css') }}" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="form-title">Booking</h1>
-      <form action="{{ url_for('booking.create', car_id=car.id) }}" method="post">
-        <div class="main-user-info">
-          <div class="user-input-box">
-            <label for="vehicle_type">Selected Car</label>
-            <select id="vehicle_type" name="car_id">
-		    <option value={{car.id}},{{car.name}},{{car.model}},{{car.status}},{{car.seat}},{{car.door}},{{car.gearbox}} >{{car.name}} | {{car.seat}} Seats | {{car.door}} Doors | {{car.gearbox}} Transmission</option>
+{% extends 'base.html' %}
 
-              <!-- Add more options as needed -->
-          </select>
-          </div>
+{% block content %}
+<div class="container mx-auto px-4 mt-10 md:px-8 lg:px-16 xl:px-24">
+    <h1 class="text-2xl font-semibold mb-3 border-b pb-2">Book Your Car</h1>
 
-          <div class="user-input-box">
-            <label for="start_date">Start Date</label>
-            <input type="date" id="start_date" name="start_date" placeholder="Enter Start Date" value="{{ today_date }}"/>
-          </div>
-
-          <div class="user-input-box">
-            <label for="end_date">End Date</label>
-            <input type="date" id="end_date" name="end_date" placeholder="Enter End Date"/>
-          </div>
+    <div class="md:flex md:space-x-4">
+        <div class="md:w-1/2">
+            <div class="bg-white rounded-lg overflow-hidden border border-gray-300 p-5">
+                <img src="{{ url_for('uploaded_image', car_id=car.id) }}" class="w-full h-auto" alt="{{ car.name }} Image">
+            </div>
         </div>
-
-        <div class="form-submit-btn">
-          <input type="submit" value="Book Now">
+        <div class="md:w-1/2 mt-0 md:mt-0">
+            <div class="bg-white rounded-lg overflow-hidden p-4 border border-gray-300">
+                <h2 class="text-2xl mb-2 font-semibold">{{ car.name }}</h2>
+                <p class="text-gray-600">
+                    <strong>Model:</strong> {{ car.model }}<br>
+                    <strong>Seats:</strong> {{ car.seat }}<br>
+                    <strong>Gearbox:</strong> {{ car.gearbox }}<br>
+		    <strong>Price per Day:</strong> {{ car.price }}<br>
+                </p>
+                <form class="mt-5" action="{{ url_for('booking.create', car_id=car.id) }}" method="POST">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="start_date">
+                            Start Date
+                        </label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_date" name="start_date" type="date" value="{{ today_date }}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="end_date">
+                            End Date
+                        </label>
+                        <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="end_date" name="end_date" type="date" required>
+                    </div>
+                    <div class="mb-4">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded inline-block w-full">Book Now</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </form>
     </div>
-  </body>
-</html>
+</div>
+{% endblock %}
