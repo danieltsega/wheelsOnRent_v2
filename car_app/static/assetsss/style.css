@@ -10,14 +10,14 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: url(about.png);
+    /*background: url(about.png);*/
     background-size: cover;
 }
 
 .container{
     width: 100%;
     max-width: 650px;
-    background: rgba(0, 0, 0, 0.5);
+    /*background: rgba(0, 0, 0, 0.5);*/
     padding: 28px;
     margin: 0 28px;
     border-radius: 10px;
