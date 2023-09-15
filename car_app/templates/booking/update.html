@@ -1,47 +1,46 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>WheelsOnRent Booking Form</title>
-    <meta name="viewport" content="width=device-width,
-      initial-scale=1.0"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='assetsss/style.css') }}" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="form-title">Update Booking</h1>
-      <form action="{{ url_for('booking.update', id=booking.id) }}" method="post">
-        <div class="main-user-info">
-          <div class="user-input-box">
-            <label for="vehicle_type">Change Car</label>
-	    <select id="vehicle_type" name="car_id">
-		{% for car in cars %}
-		  <option value="{{ car.id }}"
-		  {% if car.id == booking.car_id %}
-		  selected
-		  {% endif %}>
-		  {{car.name}} | {{car.seat}} Seats | {{car.door}} Doors | {{car.gearbox}} Transmission</option>
-		{% endfor %}
-              <!-- Add more options as needed -->
-          </select>
-          </div>
+{% extends 'base.html' %}
 
-          <div class="user-input-box">
-            <label for="start_date">Change Start Date</label>
-            <input type="date" id="start_date" name="start_date" placeholder="Enter Start Date" value="{{ booking.start_date }}"/>
-          </div>
+{% block content %}
+<div class="container mx-auto px-4 mt-10 md:px-8 lg:px-16 xl:px-24">
+    <h1 class="text-2xl font-semibold mb-3 border-b pb-4 lg:text-left" style="display: flex; justify-content: center;">Update Booking</h1>
+    <!--<div class="content-box" style="border: 1px solid #ccc; padding: 20px; border-radius: 5px; display: inline-block;">-->
+            <div style="display: flex; justify-content: center;">
+    <div class="bg-white rounded-lg overflow-hidden border border-gray-300 p-5" style="width: auto; margin: 20px auto; ">
+        <!-- Your content here -->
+        <form action="{{ url_for('booking.update', id=booking.id) }}" method="post">
+            <div class="main-user-info">
+                <div class="user-input-box" style="margin-bottom: 15px;">
+                    <label for="vehicle_type" style="font-weight: bold; font-size: 16px; color: #333;">Change Car</label>
+                    <select id="vehicle_type" name="car_id" style="width: auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                        {% for car in cars %}
+                        <option value="{{ car.id }}" {% if car.id == booking.car_id %} selected {% endif %}>
+                            {{ car.name }} | {{ car.seat }} Seats | {{ car.door }} Doors | {{ car.gearbox }} Transmission
+                        </option>
+                        {% endfor %}
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
 
-          <div class="user-input-box">
-            <label for="end_date">Change End Date</label>
-            <input type="date" id="end_date" name="end_date" placeholder="Enter End Date" value="{{ booking.end_date }}"/>
-          </div>
-        </div>
+                <div class="user-input-box" style="margin-bottom: 15px;">
+                    <label for="start_date" style="font-weight: bold; font-size: 16px; color: #333;">Change Start Date</label>
+                    <input type="date" id="start_date" name="start_date" placeholder="Enter Start Date" value="{{ booking.start_date }}" style="width: auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
 
-        <div class="form-submit-btn">
-	  <input type="submit" name="update" value="Update Booking">
-	  <input type="submit" name="cancel" value="Cancel Update">
-        </div>
-      </form>
+                <div class="user-input-box" style="margin-bottom: 15px;">
+                    <label for="end_date" style="font-weight: bold; font-size: 16px; color: #333;">Change End Date</label>
+                    <input type="date" id="end_date" name="end_date" placeholder="Enter End Date" value="{{ booking.end_date }}" style="width: auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                </div>
+            </div>
+
+            <div class="form-submit-btn" style="margin-top: 20px;">
+                <input type="submit" name="update" value="Update Booking" style="background-color: #007BFF; color: #fff; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer;">
+                <input type="submit" name="cancel" value="Cancel Update" style="background-color: #dc3545; color: #fff; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer;">
+            </div>
+        </form>
     </div>
-  </body>
-</html>
+</div>
+</div>
+</div>
+</body>
+
+{% endblock %}
