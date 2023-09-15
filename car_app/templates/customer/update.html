@@ -1,35 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="content-wrapper">
+<!--<div class="content-wrapper">-->
+<div class="container mx-auto px-4 mt-10 md:px-8 lg:px-16 xl:px-24">
+    <h1 class="text-2xl font-semibold mb-3 border-b pb-4 lg:text-left" style="display: flex; justify-content: center;">Edit Your Profile</h1>
+    <!--<div class="bg-white rounded-lg overflow-hidden border border-gray-300 p-5">-->
+
   <div class="row">
-    <div class="col-lg-6 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Edit Profile</h4>
+    <div class="col-lg-6 grid-margin stretch-card mx-auto">
+      <div class="card" style="width: auto; margin: 20px auto;">
+	<div class="card-body">
           <form class="forms-sample" method="post">
             <div class="form-group">
-              <label for="name">First Name</label>
+              <label for="name" style="font-weight: bold; font-size: 16px; color: #333;">First Name</label>
               <input type="text" class="form-control" id="name" name="name" value="{{ g.customer.name }}" required>
             </div>
             <div class="form-group">
-              <label for="last_name">Last Name</label>
+              <label for="last_name" style="font-weight: bold; font-size: 16px; color: #333;">Last Name</label>
               <input type="text" class="form-control" id="last_name" name="last_name" value="{{ g.customer.last_name }}" required>
             </div>
 	    <div class="form-group">
-              <label for="phone_number">Phone Number</label>
+              <label for="phone_number" style="font-weight: bold; font-size: 16px; color: #333;">Phone Number</label>
               <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ g.customer.phone_number }}" required>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email" style="font-weight: bold; font-size: 16px; color: #333;">Email</label>
               <input type="email" class="form-control" id="email" name="email" value="{{ g.customer.email }}" required>
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password" style="font-weight: bold; font-size: 16px; color: #333;">Password</label>
               <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="form-group">
-              <label for="confirm_password">Confirm Password</label>
+              <label for="confirm_password" style="font-weight: bold; font-size: 16px; color: #333;">Confirm Password</label>
               <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             </div>
             <button type="submit" class="btn btn-primary" style="background-color: #007ACC; border-color: #007ACC;">Save Changes</button>
