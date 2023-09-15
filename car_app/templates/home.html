@@ -3,18 +3,22 @@
 
 {% block content %}
     <style>
-        /* Custom styles can be added here */
-        /* Example:
-        .custom-bg {
-            background-color: #123456;
+        .banner {
+            background-image: url('{{ url_for('static', filename='assets/img/featured4.png') }}');
+            background-size: cover;
+            background-position: right;
+            background-attachment: fixed;
+            background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%),
+                        url('{{ url_for('static', filename='assets/img/featured4.png') }}');
         }
-        */
     </style>
     <!-- Banner Section -->
-    <header class="bg-blue-900 text-white py-16 text-center">
-        <h1 class="text-4xl font-semibold">Discover Your Next Adventure</h1>
-        <p class="mt-4 text-lg">Rent a car and hit the road with confidence.</p>
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-6 mt-8 rounded-full">Get Started</button>
+    <header class="banner text-white py-24 text-center pb-18">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold">Discover Your Next Adventure.</h1>
+            <p class="mt-4 text-lg font-semibold">Rent a car and hit the road with confidence.</p>
+            <a href="{{ url_for('car.guest_mode') }}"><button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 mt-8 rounded-full">Get Started</button></a>
+        </div>
     </header>
 
     <!-- Featured Cars Section -->
