@@ -7,7 +7,7 @@
         <script src="https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <title>WheelsOnRent</title>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.png')}}" />
+	<link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/WheelsOnRent.png')}}" />
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
@@ -17,7 +17,7 @@
   <!-- Navbar -->
 <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
   <a class="text-2xl font-bold flex items-center" href="{{ url_for('home') }}" style="text-decoration: none;">
-    <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
+    <img src="{{ url_for('static', filename='assets/img/WheelsOnRent.png') }}" class="h-10 w-10">
     <span class="hidden md:inline">WheelsOnRent</span>
 </a>
   {% if g.customer['role'] == 0 %}
