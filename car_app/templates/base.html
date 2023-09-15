@@ -15,7 +15,7 @@
 <body class="relative min-h-screen">
   <!-- Navbar -->
 <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
-  <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+  <a class="text-2xl font-bold flex items-center" href="{{ url_for('home') }}" style="text-decoration: none;">
     <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
     <span class="hidden md:inline">WheelsOnRent</span>
 </a>
@@ -65,7 +65,7 @@
       <footer class="bg-gray-900 text-white py-8 absolute w-full">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-center">
-                <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+                <a class="text-2xl font-bold flex items-center" href="{{ url_for('home') }}" style="text-decoration: none;">
                     <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="Company Logo" class="h-10 w-10 mr-2">
                 </a>
             </div>
@@ -73,7 +73,7 @@
             <p class="mt-4 text-center text-gray-300">Our mission is to provide the best car rental experience in the world.</p>
     
             <div class="mt-8 flex flex-wrap justify-center">
-                <a href="{{ url_for('car.available') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
+                <a href="{{ url_for('home') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">About Us</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Contact Us</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Our Services</a>
