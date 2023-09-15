@@ -11,18 +11,19 @@
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+        <script src="https://kit.fontawesome.com/bae88a6e1d.js" crossorigin="anonymous"></script>
     </head>
 <body class="relative min-h-screen">
   <!-- Navbar -->
 <nav class="navbar navbar-light bg-light justify-content-between p-3 pl-5">
-  <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+  <a class="text-2xl font-bold flex items-center" href="{{ url_for('home') }}" style="text-decoration: none;">
     <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="My Icon" class="h-10 w-10">
     <span class="hidden md:inline">WheelsOnRent</span>
 </a>
   {% if g.customer['role'] == 0 %}
   <div class="d-flex align-items-center">
                     <!-- Apply dropdown menu styling to greeting and name -->
-                    <p class="origin-top-right absolute right-12  mt-2 w-auto flex items-center justify-center rounded-md shadow-lg bg-primary text-white ring-1 ring-black ring-opacity-5 mb-0 d-none d-sm-block navbar-profile-name">{{ greeting }} {{ g.customer['name'] }}</p>
+                    <p class="origin-top-right absolute right-16 p-2 bottom-4  mt-2 w-auto flex items-center justify-center rounded-md shadow-lg bg-primary text-white ring-1 ring-black ring-opacity-5 mb-0 d-none d-sm-block navbar-profile-name">{{ greeting }} {{ g.customer['name'] }}</p>
    </div>
 
 
@@ -59,13 +60,13 @@
 </nav>
 
 
-      <div class="container-fluid mt-5 pb-12" style="min-height: calc(100vh - 100px);">
+      <div class="container-fluid  pb-12" style="min-height: calc(100vh - 100px); margin:0; padding:0;">
       {% block content %}{% endblock %}
       </div>
       <footer class="bg-gray-900 text-white py-8 absolute w-full">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-center">
-                <a class="text-2xl font-bold flex items-center" href="{{ url_for('car.available') }}" style="text-decoration: none;">
+                <a class="text-2xl font-bold flex items-center" href="{{ url_for('home') }}" style="text-decoration: none;">
                     <img src="{{ url_for('static', filename='assets/icons/logo.svg') }}" alt="Company Logo" class="h-10 w-10 mr-2">
                 </a>
             </div>
@@ -73,7 +74,7 @@
             <p class="mt-4 text-center text-gray-300">Our mission is to provide the best car rental experience in the world.</p>
     
             <div class="mt-8 flex flex-wrap justify-center">
-                <a href="{{ url_for('car.available') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
+                <a href="{{ url_for('home') }}" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Home</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">About Us</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Contact Us</a>
                 <a href="#" class="mx-4 text-gray-500 hover:text-gray-200" style="text-decoration: none;">Our Services</a>

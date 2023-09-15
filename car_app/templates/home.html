@@ -2,8 +2,90 @@
 
 
 {% block content %}
-<h1 style="font-weight: bold; color: #007BFF; font-size: 36px; text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
-    <strong>Home page on construction!</strong>
-</h1>
+    <style>
+        .banner {
+            background-image: url('{{ url_for('static', filename='assets/img/featured4.png') }}');
+            background-size: cover;
+            background-position: right;
+            background-attachment: fixed;
+            background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%),
+                        url('{{ url_for('static', filename='assets/img/featured4.png') }}');
+        }
+    </style>
+    <!-- Banner Section -->
+    <header class="banner text-white py-28 text-center pb-18">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold">Discover Your Next Adventure.</h1>
+            <p class="mt-4 text-lg font-semibold">Rent a car and hit the road with confidence.</p>
+            <a href="{{ url_for('car.guest_mode') }}"><button class="bg-yellow-500 hover:bg-yellow-600 text-white text-lg font-semibold py-3 px-8 mt-8 rounded-full">Get Started<i class="fa-solid fa-arrow-right ml-2 w-2"></i></button></a>
+        </div>
+    </header>
+
+    <!-- Featured Cars Section -->
+    <section class="bg-gray-100 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-semibold text-center mb-8">Featured Cars</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <!-- Featured Car 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="car1.jpg" alt="Car 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Car Model 1</h3>
+                        <p class="text-gray-600">From $XX/day</p>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Featured Car 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="car2.jpg" alt="Car 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Car Model 2</h3>
+                        <p class="text-gray-600">From $XX/day</p>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Featured Car 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="car3.jpg" alt="Car 3" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Car Model 3</h3>
+                        <p class="text-gray-600">From $XX/day</p>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-semibold text-center mb-8">Why Choose Us?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Benefit 1 -->
+                <div class="text-center">
+                    <img src="icon1.png" alt="Benefit 1" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold">Convenience</h3>
+                    <p class="text-gray-600">Easy online booking and pick-up/drop-off options.</p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="text-center">
+                    <img src="icon2.png" alt="Benefit 2" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold">Variety</h3>
+                    <p class="text-gray-600">Wide range of cars to suit your needs.</p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="text-center">
+                    <img src="icon3.png" alt="Benefit 3" class="w-16 mx-auto mb-4">
+                    <h3 class="text-xl font-semibold">Affordability</h3>
+                    <p class="text-gray-600">Competitive prices and special offers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 
