@@ -24,7 +24,7 @@
     <!-- Featured Cars Section -->
     <section class="bg-gray-100 py-16">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-semibold text-center mb-8">Featured Cars</h2>
+            <h2 class="text-3xl font-bold text-center mb-8">Featured Cars</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <!-- Featured Car 1 -->
                 <div class="bg-white rounded-lg overflow-hidden shadow-md">
@@ -32,7 +32,7 @@
                     <div class="p-4">
                         <h3 class="text-xl font-semibold">AUDI S8 Plus</h3>
                         <p class="text-gray-600">The Audi S8 Plus is a high-performance luxury sedan that is perfect for drivers who want the best of both worlds.</p>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                        <a href="{{ url_for('car.guest_mode') }}"><button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View More Cars</button></a>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                     <div class="p-4">
                         <h3 class="text-xl font-semibold">PORSCHE Boxter</h3>
                         <p class="text-gray-600">The Porsche Boxster is a perfect sports car for a fun driving experience. It is also a great choice for drivers who want a stylish sports car.</p>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                        <a href="{{ url_for('car.guest_mode') }}"><button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View More Cars</button></a>
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
                     <div class="p-4">
                         <h3 class="text-xl font-semibold">PORSCHE Taycan</h3>
                         <p class="text-gray-600">The Porsche Taycan is a truly innovative and groundbreaking car. It is the perfect example of a leader in the development of vehicles.</p>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View Details</button>
+                        <a href="{{ url_for('car.guest_mode') }}"><button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 mt-4 rounded">View More Cars</button></a>
                     </div>
                 </div>
             </div>
