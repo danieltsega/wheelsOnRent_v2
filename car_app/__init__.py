@@ -59,4 +59,7 @@ def create_app(test_config=None):
     app.register_blueprint(car.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import about
+    app.register_blueprint(about.bp)
+
     return app

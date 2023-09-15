@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- About Us Section -->
+<section class="bg-white py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- About Us Text -->
+            <div>
+                <p class="text-gray-600 text-lg leading-relaxed text-justify">
+                    Welcome to Wheels On Rent, your go-to destination for hassle-free car rentals.
+                    Our mission is to provide you with the freedom to explore the world at your own pace,
+                    offering a diverse range of well-maintained vehicles to suit your needs.
+                </p>
+                <p class="mt-4 text-gray-600 text-lg leading-relaxed text-justify">
+                    We take pride in delivering top-notch service, ensuring your journey is comfortable, safe,
+                    and memorable. Whether it's a weekend getaway, a family vacation, or a business trip,
+                    we've got you covered. Experience the joy of travel with Wheels On Rent.
+                </p>
+            </div>
+
+            <!-- Company Image -->
+            <div class="flex items-center justify-center bg-slate-100 rounded-lg">
+                 <img src="{{ url_for('static', filename='assets/img/company.png') }}" alt="About Us Image" class="w-full rounded-lg">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
