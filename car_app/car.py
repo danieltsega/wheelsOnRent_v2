@@ -193,3 +193,9 @@ def delete(id):
     db.execute('DELETE FROM car WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('car.index'))
+
+# About us
+@bp.route('/about')
+def about():
+    return render_template('car/about.html')
+
