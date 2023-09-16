@@ -199,3 +199,12 @@ def delete(id):
 def about():
     return render_template('car/about.html')
 
+# Contact
+@bp.route('/contact')
+def contact():
+    return render_template('car/contact.html')
+
+# Service
+@bp.route('/service')
+def service():
+    return render_template('car/service.html')
