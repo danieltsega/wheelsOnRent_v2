@@ -1,8 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 style="color: yellow; background: black; text-align: center;">
-    <strong style="font-size: 46px;">Site under construction!</strong>
-</h1>
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Our Services</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">Discover the wide range of services we offer to make your car rental experience exceptional.</p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Car Rental</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          Explore our extensive fleet of rental cars, including sedans, SUVs, luxury cars, and more. Whether it's for a business trip or a family vacation, we have the perfect car for your needs.
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Flexible Booking</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          We offer flexible booking options, including daily, weekly, and monthly rentals. You can also choose from various pickup and drop-off locations to suit your convenience.
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">24/7 Customer Support</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          Our dedicated customer support team is available 24/7 to assist you with any inquiries, reservations, or emergencies. We are here to make your rental experience hassle-free.
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
 {% endblock %}
 
