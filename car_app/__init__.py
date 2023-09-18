@@ -10,6 +10,9 @@ def create_app(test_config=None):
     app.config['UPLOAD_FOLDER'] = 'uploads'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
+    # Set strict_slashes=False to allow flexibility with trailing slashes
+    app.url_map.strict_slashes = False
+
     @app.route('/uploads/<int:car_id>')
     def uploaded_image(car_id):
         # Fetch the image data from the database
@@ -41,7 +44,7 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/')
+    @app.route('/wheels_on_rent/')
     def home():
         return render_template('home.html')
         # return redirect(url_for('car.guest_mode'))
