@@ -43,6 +43,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    # Welcome page
+    @app.route('/')
+    def welcome():
+        return render_template('welcome.html')
+
     # a simple page that says hello
     @app.route('/wheels_on_rent/')
     def home():
@@ -60,6 +65,6 @@ def create_app(test_config=None):
 
     from . import car
     app.register_blueprint(car.bp)
-    app.add_url_rule('/', endpoint='index')
+    #app.add_url_rule('/', endpoint='index')
 
     return app

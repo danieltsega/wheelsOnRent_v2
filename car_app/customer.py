@@ -41,15 +41,15 @@ def register():
                     (name, last_name, phone_number, email, generate_password_hash(password)),
                 )
                 db.commit()
-                flash('You have registered successfully.')
+                flash('You have registered successfully.', 'success')
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
                 return redirect(url_for("customer.login"))
 
-        flash(error)
+        flash(error, 'error')
 
-    return render_template('customer/register.html')
+    return render_template('customer/login.html')
 
 # Customer login control
 @bp.route('/login', methods=('GET', 'POST'))
@@ -75,7 +75,7 @@ def login():
                 return redirect(url_for('customer.admin_dashboard'))
             return redirect(url_for('car.available'))
 
-        flash(error)
+        flash(error, 'error')
 
     return render_template('customer/login.html')
 
