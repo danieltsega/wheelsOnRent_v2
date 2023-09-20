@@ -1,6 +1,5 @@
 
 
-
 CREATE TABLE car (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
@@ -18,7 +17,7 @@ CREATE TABLE customer (
   name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   phone_number TEXT NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
   role TEXT INTEGER DEFAULT 0
 );
