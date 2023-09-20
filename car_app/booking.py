@@ -9,7 +9,7 @@ from car_app.db import get_db
 from car_app.car import get_car
 from car_app.shared_variables import get_greeting, get_today_date
 
-bp = Blueprint('booking', __name__, url_prefix='/booking')
+bp = Blueprint('booking', __name__, url_prefix='/wheels_on_rent/booking')
 
 
 # Admin can see all bookings
@@ -82,6 +82,7 @@ def create(car_id):
                 (car_id,)
             )
             db.commit()
+            flash('You have successfully booked your car !', 'success')
             return redirect(url_for('booking.my_bookings'))
 
     return render_template('booking/create.html', today_date=today_date, car=car)

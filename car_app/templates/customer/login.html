@@ -31,6 +31,11 @@
                 </button>
             </div>
             {% endfor %}
+	    <script>
+                setTimeout(function () {
+                    document.querySelector(".alert").style.display = "none";
+                }, 2000); // Adjust the time in milliseconds (5000ms = 5 seconds)
+            </script>
         {% endif %}
     {% endwith %}
     <body>

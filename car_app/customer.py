@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from car_app.db import get_db
 
-bp = Blueprint('customer', __name__, url_prefix='/customer')
+bp = Blueprint('customer', __name__, url_prefix='/wheels_on_rent/customer')
 
 # Customer register control
 @bp.route('/register', methods=('GET', 'POST'))

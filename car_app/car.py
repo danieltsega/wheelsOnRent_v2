@@ -10,7 +10,7 @@ from car_app.customer import login_required
 from car_app.db import get_db
 from car_app.shared_variables import get_greeting
 
-bp = Blueprint('car', __name__)
+bp = Blueprint('car', __name__, url_prefix='/wheels_on_rent/car')
 
 # Function to check if a file has an allowed extension
 def allowed_file(filename):
@@ -21,7 +21,7 @@ def get_upload_path(filename):
     return os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
 
 # Admin mode page, Admin can see all cars(booked and avalable)
-@bp.route('/car/')
+@bp.route('/')
 @login_required
 def index():
     db = get_db()
