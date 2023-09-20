@@ -43,7 +43,7 @@ def register():
                 db.commit()
                 flash('You have registered successfully.', 'success')
             except db.IntegrityError:
-                error = f"User {username} is already registered."
+                error = f"Email {email} is already registered."
             else:
                 return redirect(url_for("customer.login"))
 
